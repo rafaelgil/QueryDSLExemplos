@@ -10,5 +10,8 @@ public interface ClienteService {
 	List<Cliente> findByNomeQueryDSL(String nome);
 	List<Cliente> findByNomeCpfTelefoneHQL(String nome, String cpf, String telefone);
 	List<Cliente> findByNomeCpfTelefoneQueryDSL(String nome, String cpf, String telefone);
+	
+	void delete(Integer id);
+	void update(Integer id, String nome);
 
 }

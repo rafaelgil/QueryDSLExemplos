@@ -14,7 +14,7 @@ import com.estudo.querydsl.domain.QVenda;
 import com.estudo.querydsl.domain.QVendaProduto;
 import com.estudo.querydsl.domain.VendaProduto;
 import com.estudo.querydsl.utils.WhereBooleanBuilder;
-import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Repository
 public class VendaServiceRepositoryImpl implements VendaServiceRepository {
@@ -31,8 +31,9 @@ public class VendaServiceRepositoryImpl implements VendaServiceRepository {
 		QCliente cliente = venda.cliente;
 		QProduto produto = vendaProduto.produto;
 		
-		JPAQuery<VendaProduto> query = new JPAQuery<VendaProduto>(entityManager);	
-		List<VendaProduto> resultList = query.from(vendaProduto)
+		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
+		
+		List<VendaProduto> resultList = queryFactory.selectFrom(vendaProduto)
 				.innerJoin(venda)
 				.innerJoin(produto)
 				.innerJoin(cliente)

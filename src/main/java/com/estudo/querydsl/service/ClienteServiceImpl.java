@@ -35,4 +35,14 @@ public class ClienteServiceImpl implements ClienteService {
 		return clienteRepository.findByNomeCpfTelefoneQueryDSL(nome, cpf, telefone);
 	}
 
+	@Override
+	public void delete(Integer id) {
+		clienteRepository.delete(id);		
+	}
+
+	@Override
+	public void update(Integer id, String nome) {
+		clienteRepository.update(id, nome);		
+	}
+
 }

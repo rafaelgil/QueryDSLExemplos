@@ -14,4 +14,8 @@ public interface ClienteRepository {
 
 	List<Cliente> findByNomeCpfTelefoneQueryDSL(String nome, String cpf, String telefone);
 
+	void delete(Integer id);
+
+	void update(Integer id, String nome);
+
 }

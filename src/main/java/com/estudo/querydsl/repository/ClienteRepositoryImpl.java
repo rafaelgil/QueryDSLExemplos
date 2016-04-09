@@ -12,12 +12,12 @@ import org.springframework.stereotype.Repository;
 import com.estudo.querydsl.domain.Cliente;
 import com.estudo.querydsl.domain.QCliente;
 import com.estudo.querydsl.utils.WhereBooleanBuilder;
-import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Repository
 public class ClienteRepositoryImpl implements ClienteRepository {
 
-	@PersistenceContext	
+	@PersistenceContext
 	private EntityManager entityManager;
 	
 	@SuppressWarnings("unchecked")
@@ -44,10 +44,11 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Cliente> findByNomeQueryDSL(String nome) {
-		
 		QCliente cliente = QCliente.cliente;
-		JPAQuery<Cliente> query = new JPAQuery<Cliente>(entityManager);		
-		List<Cliente> resultList = query.from(cliente)
+		
+		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
+
+		List<Cliente> resultList = queryFactory.selectFrom(cliente)
 				.where(
 					new WhereBooleanBuilder()
 						.optionalAnd(nome, ()-> cliente.nome.like(nome))						
@@ -96,8 +97,10 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 	public List<Cliente> findByNomeCpfTelefoneQueryDSL(String nome, String cpf, String telefone) {
 		
 		QCliente cliente = QCliente.cliente;
-		JPAQuery<Cliente> query = new JPAQuery<Cliente>(entityManager);		
-		List<Cliente> resultList = query.from(cliente)
+		
+		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
+		
+		List<Cliente> resultList = queryFactory.selectFrom(cliente)
 				.where(
 					new WhereBooleanBuilder()
 						.optionalAnd(nome, ()-> cliente.nome.like("%"+nome+"%"))						
@@ -108,6 +111,26 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 		
 		return resultList;
 		
+	}
+
+	@Override
+	public void delete(Integer id) {
+		QCliente cliente = QCliente.cliente;
+		
+		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
+		
+		queryFactory.delete(cliente).where(cliente.id.eq(id)).execute();
+		
+	}
+
+	@Override
+	public void update(Integer id, String nome) {
+		
+		QCliente cliente = QCliente.cliente;
+		
+		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
+				
+		queryFactory.update(cliente).set(cliente.nome, nome).where(cliente.id.eq(id)).execute();
 	}
 
 }

@@ -1,3 +1,8 @@
+drop table  cliente if exists;
+drop table  produto if exists;
+drop table  venda if exists;
+drop table  vendaproduto if exists;
+
 create table cliente(
 	id int,
 	nome varchar(100),

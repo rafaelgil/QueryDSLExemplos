@@ -17,14 +17,14 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import com.estudo.querydsl.configuration.ApplicationConfiguration;
+import com.estudo.querydsl.configuration.ApplicationConfigurationTest;
 import com.estudo.querydsl.domain.Cliente;
 import com.estudo.querydsl.domain.Venda;
 import com.estudo.querydsl.domain.VendaProduto;
 import com.estudo.querydsl.service.VendaService;
 
 @RunWith(SpringJUnit4ClassRunner.class)  
-@ContextConfiguration(classes=ApplicationConfiguration.class)
+@ContextConfiguration(classes=ApplicationConfigurationTest.class)
 @Transactional
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 public class TestVendaService{
